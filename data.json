@@ -1,0 +1,152 @@
+[
+  {
+    "id": "triplets_001",
+    "category": "array_algorithms",
+    "difficulty": "medium",
+    "problem": {
+      "title": "Find Triplets with Sum Zero",
+      "description": "Given an array of integers, find all unique triplets that sum to zero. Return triplets in ascending order.",
+      "constraints": "3 <= len(arr) <= 10000, -10^6 <= arr[i] <= 10^6"
+    },
+    "initial_code": "def find_triplets_sum_zero(arr):\n    # O(N^3) brute force approach with duplicate checking\n    result = []\n    n = len(arr)\n    seen = set()\n    \n    for i in range(n):\n        for j in range(i + 1, n):\n            for k in range(j + 1, n):\n                if arr[i] + arr[j] + arr[k] == 0:\n                    triplet = tuple(sorted([arr[i], arr[j], arr[k]]))\n                    if triplet not in seen:\n                        seen.add(triplet)\n                        result.append(list(triplet))\n    \n    return result",
+    "test_cases": [
+      {
+        "function": "find_triplets_sum_zero",
+        "input": [[-1, 0, 1, 2, -1, -4]],
+        "expected": [[-1, -1, 2], [-1, 0, 1]]
+      },
+      {
+        "function": "find_triplets_sum_zero",
+        "input": [[0, 0, 0]],
+        "expected": [[0, 0, 0]]
+      },
+      {
+        "function": "find_triplets_sum_zero",
+        "input": [[1, 2, 3, 4, 5]],
+        "expected": []
+      }
+    ],
+    "language": "python",
+    "heavy_input_generator": "import random\nn = 10000\narr = [random.randint(-1000000, 1000000) for _ in range(n)]\nprint(' '.join(map(str, arr)))",
+    "optimization_goal": "Replace O(N^3) brute force with O(N^2) two-pointer approach: sort array, fix first element, use two pointers for remaining elements"
+  },
+  {
+    "id": "lcs_001",
+    "category": "dynamic_programming",
+    "difficulty": "medium",
+    "problem": {
+      "title": "Longest Common Subsequence",
+      "description": "Find the length of the longest common subsequence between two strings. A subsequence is a sequence derived by deleting some or no elements without changing the order.",
+      "constraints": "0 <= len(s1), len(s2) <= 10000"
+    },
+    "initial_code": "def longest_common_subsequence(s1, s2):\n    # O(2^min(m,n)) recursive approach without memoization\n    def lcs_recursive(i, j):\n        if i == len(s1) or j == len(s2):\n            return 0\n        \n        if s1[i] == s2[j]:\n            return 1 + lcs_recursive(i + 1, j + 1)\n        else:\n            return max(lcs_recursive(i + 1, j), lcs_recursive(i, j + 1))\n    \n    return lcs_recursive(0, 0)",
+    "test_cases": [
+      {
+        "function": "longest_common_subsequence",
+        "input": ["ABCDGH", "AEDFHR"],
+        "expected": 3
+      },
+      {
+        "function": "longest_common_subsequence",
+        "input": ["AGGTAB", "GXTXAYB"],
+        "expected": 4
+      },
+      {
+        "function": "longest_common_subsequence",
+        "input": ["ABC", "DEF"],
+        "expected": 0
+      }
+    ],
+    "language": "python",
+    "heavy_input_generator": "import random\nimport string\nn = 10000\nprint(''.join(random.choices(string.ascii_uppercase, k=n)))\nprint(''.join(random.choices(string.ascii_uppercase, k=n)))",
+    "optimization_goal": "Replace O(2^min(m,n)) recursion with O(m*n) dynamic programming, then optimize space to O(min(m,n))"
+  },
+  {
+    "id": "subarray_sum_001",
+    "category": "hash_map",
+    "difficulty": "medium",
+    "problem": {
+      "title": "Count Subarrays with Target Sum",
+      "description": "Given an array of integers and a target sum, count the number of contiguous subarrays whose sum equals the target.",
+      "constraints": "1 <= len(arr) <= 100000, -10^6 <= arr[i], target <= 10^6"
+    },
+    "initial_code": "def count_subarrays_with_sum(arr, target_sum):\n    # O(N^2) brute force - check all subarrays\n    count = 0\n    n = len(arr)\n    \n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            current_sum += arr[j]\n            if current_sum == target_sum:\n                count += 1\n    \n    return count",
+    "test_cases": [
+      {
+        "function": "count_subarrays_with_sum",
+        "input": [[1, 2, 3, 4, 5], 9],
+        "expected": 2
+      },
+      {
+        "function": "count_subarrays_with_sum",
+        "input": [[10, 2, -2, -20, 10], -10],
+        "expected": 3
+      },
+      {
+        "function": "count_subarrays_with_sum",
+        "input": [[1, 1, 1], 2],
+        "expected": 2
+      }
+    ],
+    "language": "python",
+    "heavy_input_generator": "import random\nn = 100000\ntarget = random.randint(-1000000, 1000000)\narr = [random.randint(-1000000, 1000000) for _ in range(n)]\nprint(f'{target}')\nprint(' '.join(map(str, arr)))",
+    "optimization_goal": "Replace O(N^2) nested loops with O(N) prefix sum + hash map approach"
+  },
+  {
+    "id": "duplicate_pairs_001",
+    "category": "hash_map",
+    "difficulty": "easy",
+    "problem": {
+      "title": "Find All Duplicate Value Pairs",
+      "description": "Given an array of integers, find all pairs of indices (i, j) where i < j and arr[i] == arr[j]. Return sorted list of index pairs.",
+      "constraints": "1 <= len(arr) <= 10000, -10^6 <= arr[i] <= 10^6"
+    },
+    "initial_code": "def find_duplicate_pairs(nums):\n    # O(N^2) brute force comparison\n    result = []\n    n = len(nums)\n    \n    for i in range(n):\n        for j in range(i + 1, n):\n            if nums[i] == nums[j]:\n                result.append([i, j])\n    \n    return result",
+    "test_cases": [
+      {
+        "function": "find_duplicate_pairs",
+        "input": [[1, 2, 3, 1, 2, 3]],
+        "expected": [[0, 3], [1, 4], [2, 5]]
+      },
+      {
+        "function": "find_duplicate_pairs",
+        "input": [[1, 1, 1, 1]],
+        "expected": [[0, 1], [0, 2], [0, 3], [1, 2], [1, 3], [2, 3]]
+      },
+      {
+        "function": "find_duplicate_pairs",
+        "input": [[1, 2, 3, 4, 5]],
+        "expected": []
+      }
+    ],
+    "language": "python",
+    "heavy_input_generator": "import random\nn = 10000\narr = [random.randint(-1000000, 1000000) for _ in range(n)]\nprint(' '.join(map(str, arr)))",
+    "optimization_goal": "Replace O(N^2) nested loops with O(N) hash map to group indices by value"
+  },
+  {
+    "id": "matrix_path_001",
+    "category": "dynamic_programming",
+    "difficulty": "medium",
+    "problem": {
+      "title": "Matrix Maximum Path Sum",
+      "description": "Given an m x n matrix, find the maximum sum path from top-left to bottom-right. You can only move right or down.",
+      "constraints": "1 <= m, n <= 1000, -10^6 <= matrix[i][j] <= 10^6"
+    },
+    "initial_code": "def matrix_max_path_sum(matrix):\n    # O(2^(m+n)) recursive approach without memoization\n    if not matrix or not matrix[0]:\n        return 0\n    \n    m, n = len(matrix), len(matrix[0])\n    \n    def max_path(i, j):\n        if i == m - 1 and j == n - 1:\n            return matrix[i][j]\n        \n        if i == m - 1:\n            return matrix[i][j] + max_path(i, j + 1)\n        \n        if j == n - 1:\n            return matrix[i][j] + max_path(i + 1, j)\n        \n        return matrix[i][j] + max(max_path(i + 1, j), max_path(i, j + 1))\n    \n    return max_path(0, 0)",
+    "test_cases": [
+      {
+        "function": "matrix_max_path_sum",
+        "input": [[[1, 3, 1], [1, 5, 1], [4, 2, 1]]],
+        "expected": 12
+      },
+      {
+        "function": "matrix_max_path_sum",
+        "input": [[[1, 2], [3, 4]]],
+        "expected": 8
+      }
+    ],
+    "language": "python",
+    "heavy_input_generator": "import random\nm = 1000\nn = 1000\nfor i in range(m):\n    row = [random.randint(-1000000, 1000000) for _ in range(n)]\n    print(row)",
+    "optimization_goal": "Replace O(2^(m+n)) recursion with O(m*n) dynamic programming, then optimize space to O(n)"
+  }
+]
