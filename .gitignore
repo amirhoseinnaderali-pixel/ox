@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+.env
+results/raw/*.jsonl
+results/processed/*.json
+results/figures/*.png
+.DS_Store

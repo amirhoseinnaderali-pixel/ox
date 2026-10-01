@@ -1,0 +1,103 @@
+{
+  "problem_id": "triplets_001",
+  "title": "find_triplets_sum_zero",
+  "category": "array_algorithms",
+  "difficulty": "medium",
+  "description": "Find unique triplets that sum to zero and return them in ascending order.",
+  "function_name": "find_triplets_sum_zero",
+  "constraints": "3 <= n <= 10000; values in [-10^6, 10^6]",
+  "generator_name": "triplets",
+  "expected_complexity": "O(n^2) after sorting",
+  "baseline_code": "def find_triplets_sum_zero(arr):\n    result = []\n    seen = set()\n    n = len(arr)\n    for i in range(n):\n        for j in range(i + 1, n):\n            for k in range(j + 1, n):\n                if arr[i] + arr[j] + arr[k] == 0:\n                    triplet = tuple(sorted([arr[i], arr[j], arr[k]]))\n                    if triplet not in seen:\n                        seen.add(triplet)\n                        result.append(list(triplet))\n    return result",
+  "reference_code": "def find_triplets_sum_zero(arr):\n    nums = sorted(arr)\n    result = []\n    n = len(nums)\n    for i in range(n - 2):\n        if i and nums[i] == nums[i - 1]:\n            continue\n        if nums[i] > 0:\n            break\n        left, right = i + 1, n - 1\n        while left < right:\n            total = nums[i] + nums[left] + nums[right]\n            if total == 0:\n                result.append([nums[i], nums[left], nums[right]])\n                left += 1\n                right -= 1\n                while left < right and nums[left] == nums[left - 1]:\n                    left += 1\n                while left < right and nums[right] == nums[right + 1]:\n                    right -= 1\n            elif total < 0:\n                left += 1\n            else:\n                right -= 1\n    return result",
+  "correctness_cases": [
+    {
+      "case_id": "example_1",
+      "args": [
+        [
+          -1,
+          0,
+          1,
+          2,
+          -1,
+          -4
+        ]
+      ],
+      "kwargs": {},
+      "expected": [
+        [
+          -1,
+          -1,
+          2
+        ],
+        [
+          -1,
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "case_id": "example_2",
+      "args": [
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "kwargs": {},
+      "expected": [
+        [
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "case_id": "example_3",
+      "args": [
+        [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      ],
+      "kwargs": {},
+      "expected": []
+    }
+  ],
+  "regimes": [
+    {
+      "name": "small",
+      "repeats": 10,
+      "warmups": 3,
+      "seed": 11,
+      "description": "Correctness-adjacent sanity scale."
+    },
+    {
+      "name": "medium",
+      "repeats": 15,
+      "warmups": 5,
+      "seed": 23,
+      "description": "Default controlled evaluation scale."
+    },
+    {
+      "name": "large",
+      "repeats": 15,
+      "warmups": 5,
+      "seed": 37,
+      "description": "Primary scalability scale."
+    },
+    {
+      "name": "stress",
+      "repeats": 10,
+      "warmups": 5,
+      "seed": 53,
+      "description": "Optional stress scale; may exceed budget for weak baselines."
+    }
+  ]
+}

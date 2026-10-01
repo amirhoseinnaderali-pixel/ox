@@ -1,0 +1,10 @@
+A1_single_shot: true
+A2_no_execution_verification: diagnostic_only
+A3_no_simulated_annealing: true
+A4_no_strategy_conditioning: true
+A5_no_history: true
+A6_single_model: true
+A7_alternative_models: configure_per_study
+A8_budgets: [1, 5, 10, 20, 50]
+A9_input_scales: [small, medium, large]
+A10_acceptance_policies: [greedy, simulated_annealing]

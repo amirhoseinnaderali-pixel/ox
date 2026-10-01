@@ -1,0 +1,5 @@
+budgets: [1, 5, 10, 20, 50]
+seeds: [7, 11, 17, 23, 29]
+regimes: [small, medium, large]
+acceptance_policies: [greedy, simulated_annealing]
+correctness_is_hard_constraint: true

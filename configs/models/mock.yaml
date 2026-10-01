@@ -1,0 +1,3 @@
+name: mock/static
+purpose: deterministic CI smoke test
+network_calls: false
