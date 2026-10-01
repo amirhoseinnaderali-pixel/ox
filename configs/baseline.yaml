@@ -1,0 +1,11 @@
+project: VEPO-LLM
+correctness_first: true
+default_timeout_s: 10
+default_memory_mb: 512
+baselines:
+  - original
+  - single_shot
+  - iterative
+  - verified
+  - simulated_annealing
+  - reference

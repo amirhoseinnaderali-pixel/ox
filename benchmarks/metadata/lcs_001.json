@@ -1,0 +1,72 @@
+{
+  "problem_id": "lcs_001",
+  "title": "longest_common_subsequence",
+  "category": "dynamic_programming",
+  "difficulty": "medium",
+  "description": "Return the length of the longest common subsequence of two strings.",
+  "function_name": "longest_common_subsequence",
+  "constraints": "0 <= len(s1), len(s2) <= 10000",
+  "generator_name": "lcs",
+  "expected_complexity": "O(m*n) time, O(min(m,n)) space",
+  "baseline_code": "def longest_common_subsequence(s1, s2):\n    def lcs_recursive(i, j):\n        if i == len(s1) or j == len(s2):\n            return 0\n        if s1[i] == s2[j]:\n            return 1 + lcs_recursive(i + 1, j + 1)\n        return max(lcs_recursive(i + 1, j), lcs_recursive(i, j + 1))\n    return lcs_recursive(0, 0)",
+  "reference_code": "def longest_common_subsequence(s1, s2):\n    if len(s1) < len(s2):\n        s1, s2 = s2, s1\n    prev = [0] * (len(s2) + 1)\n    for a in s1:\n        curr = [0]\n        for j, b in enumerate(s2, 1):\n            curr.append(prev[j - 1] + 1 if a == b else max(prev[j], curr[-1]))\n        prev = curr\n    return prev[-1]",
+  "correctness_cases": [
+    {
+      "case_id": "example_1",
+      "args": [
+        "ABCDGH",
+        "AEDFHR"
+      ],
+      "kwargs": {},
+      "expected": 3
+    },
+    {
+      "case_id": "example_2",
+      "args": [
+        "AGGTAB",
+        "GXTXAYB"
+      ],
+      "kwargs": {},
+      "expected": 4
+    },
+    {
+      "case_id": "example_3",
+      "args": [
+        "ABC",
+        "DEF"
+      ],
+      "kwargs": {},
+      "expected": 0
+    }
+  ],
+  "regimes": [
+    {
+      "name": "small",
+      "repeats": 10,
+      "warmups": 3,
+      "seed": 11,
+      "description": "Correctness-adjacent sanity scale."
+    },
+    {
+      "name": "medium",
+      "repeats": 15,
+      "warmups": 5,
+      "seed": 23,
+      "description": "Default controlled evaluation scale."
+    },
+    {
+      "name": "large",
+      "repeats": 15,
+      "warmups": 5,
+      "seed": 37,
+      "description": "Primary scalability scale."
+    },
+    {
+      "name": "stress",
+      "repeats": 10,
+      "warmups": 5,
+      "seed": 53,
+      "description": "Optional stress scale; may exceed budget for weak baselines."
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "problem_id": "subarray_sum_001",
+  "title": "count_subarrays_with_sum",
+  "category": "hash_map",
+  "difficulty": "medium",
+  "description": "Count contiguous subarrays with a specified target sum.",
+  "function_name": "count_subarrays_with_sum",
+  "constraints": "1 <= n <= 100000",
+  "generator_name": "subarray_sum",
+  "expected_complexity": "O(n)",
+  "baseline_code": "def count_subarrays_with_sum(arr, target_sum):\n    count = 0\n    n = len(arr)\n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            current_sum += arr[j]\n            if current_sum == target_sum:\n                count += 1\n    return count",
+  "reference_code": "def count_subarrays_with_sum(arr, target_sum):\n    counts = {0: 1}\n    prefix = 0\n    result = 0\n    for value in arr:\n        prefix += value\n        result += counts.get(prefix - target_sum, 0)\n        counts[prefix] = counts.get(prefix, 0) + 1\n    return result",
+  "correctness_cases": [
+    {
+      "case_id": "example_1",
+      "args": [
+        [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        9
+      ],
+      "kwargs": {},
+      "expected": 2
+    },
+    {
+      "case_id": "example_2",
+      "args": [
+        [
+          10,
+          2,
+          -2,
+          -20,
+          10
+        ],
+        -10
+      ],
+      "kwargs": {},
+      "expected": 3
+    },
+    {
+      "case_id": "example_3",
+      "args": [
+        [
+          1,
+          1,
+          1
+        ],
+        2
+      ],
+      "kwargs": {},
+      "expected": 2
+    }
+  ],
+  "regimes": [
+    {
+      "name": "small",
+      "repeats": 10,
+      "warmups": 3,
+      "seed": 11,
+      "description": "Correctness-adjacent sanity scale."
+    },
+    {
+      "name": "medium",
+      "repeats": 15,
+      "warmups": 5,
+      "seed": 23,
+      "description": "Default controlled evaluation scale."
+    },
+    {
+      "name": "large",
+      "repeats": 15,
+      "warmups": 5,
+      "seed": 37,
+      "description": "Primary scalability scale."
+    },
+    {
+      "name": "stress",
+      "repeats": 10,
+      "warmups": 5,
+      "seed": 53,
+      "description": "Optional stress scale; may exceed budget for weak baselines."
+    }
+  ]
+}

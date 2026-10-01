@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: python -m pip install -e '.[test]'
+      - name: Unit tests
+        run: pytest
+      - name: Deterministic smoke test
+        run: |
+          python scripts/run_experiment.py --problem subarray_sum_001 --baseline iterative --model mock/static --budget 1 --regime small --seed 42 --output /tmp/vepo-smoke.jsonl
+          python scripts/evaluate.py /tmp/vepo-smoke.jsonl --output /tmp/vepo-summary.json

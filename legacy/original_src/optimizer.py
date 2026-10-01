@@ -525,9 +525,9 @@ DEFAULT_CONFIG = {
 }
 
 api_key_list=[
-"AIzaSyCHpwuL_EQ909zsM9mkn4O380oOjCaTqwU",
-"AIzaSyD7EGcv33eidr08biwfHntFTMmWhtWSqU4",
-"AIzaSyAoHGGb4WA_yYJNGEUkSyP43wINk6NYBdY",
+"REDACTED_API_KEY",
+"REDACTED_API_KEY",
+"REDACTED_API_KEY",
 ]
 # ============================================================================
 # LLM Interface
